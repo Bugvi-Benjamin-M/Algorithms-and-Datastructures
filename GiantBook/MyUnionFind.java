@@ -188,8 +188,16 @@ public class MyUnionFind {
     }
     
     public boolean isGiant(){
+        int temp;
+        if(n%2 == 1){
+            temp = (n+1)/2;
+        }
+        else{
+            temp = n/2;
+        }
         for(int i = 0 ; i < n ; i++){
-            if(size[i]*2 >= n){
+            
+            if(size[i] >= temp){
                 return true;
             }
         }

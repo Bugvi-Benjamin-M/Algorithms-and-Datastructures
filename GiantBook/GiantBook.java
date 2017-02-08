@@ -5,9 +5,9 @@ import java.util.Random;
 public class  GiantBook {
     private MyUnionFind myUnionFind;
     private static Random random = new Random();
-    private int stepsUntilConnected =1;
-    private int stepsUntilGiant =1;
-    private int stepsUntilNotIsolated =1;
+    private int stepsUntilConnected;
+    private int stepsUntilGiant;
+    private int stepsUntilNotIsolated;
     
     public GiantBook(int n){
         myUnionFind = new MyUnionFind(n);
@@ -29,8 +29,9 @@ public class  GiantBook {
     }
     public void findStepsWithInput(){
         while (!StdIn.isEmpty()){
-            addInputPair();
             analyze();
+            addInputPair();
+            
         }
     }
     
