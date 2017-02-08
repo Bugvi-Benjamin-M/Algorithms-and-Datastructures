@@ -4,4 +4,6 @@ public class  GiantBook {
     public GiantBook(){
         
     }
+    public static void main(String[] args){
+    }
 }
