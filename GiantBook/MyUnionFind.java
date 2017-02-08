@@ -1,29 +1,18 @@
 /******************************************************************************
- *  Compilation:  javac UF.java
- *  Execution:    java UF < input.txt
+ *  Compilation:  javac WeightedQuickUnionUF.java
+ *  Execution:  java WeightedQuickUnionUF < input.txt
  *  Dependencies: StdIn.java StdOut.java
  *  Data files:   http://algs4.cs.princeton.edu/15uf/tinyUF.txt
  *                http://algs4.cs.princeton.edu/15uf/mediumUF.txt
  *                http://algs4.cs.princeton.edu/15uf/largeUF.txt
  *
- *  Weighted quick-union by rank with path compression by halving.
- *
- *  % java UF < tinyUF.txt
- *  4 3
- *  3 8
- *  6 5
- *  9 4
- *  2 1
- *  5 0
- *  7 2
- *  6 1
- *  2 components
+ *  Weighted quick-union (without path compression).
  *
  ******************************************************************************/
 
 
 /**
- *  The {@code UF} class represents a <em>union–find data type</em>
+ *  The {@code WeightedQuickUnionUF} class represents a <em>union–find data type</em>
  *  (also known as the <em>disjoint-sets data type</em>).
  *  It supports the <em>union</em> and <em>find</em> operations,
  *  along with a <em>connected</em> operation for determining whether
@@ -74,16 +63,13 @@
  *  <em>union</em>—it cannot change during a call
  *  to <em>find</em>, <em>connected</em>, or <em>count</em>.
  *  <p>
- *  This implementation uses weighted quick union by rank with path compression
- *  by halving.
+ *  This implementation uses weighted quick union by size (without path compression).
  *  Initializing a data structure with <em>n</em> sites takes linear time.
- *  Afterwards, the <em>union</em>, <em>find</em>, and <em>connected</em> 
- *  operations take logarithmic time (in the worst case) and the
+ *  Afterwards, the <em>union</em>, <em>find</em>, and <em>connected</em>
+ *  operations  take logarithmic time (in the worst case) and the
  *  <em>count</em> operation takes constant time.
- *  Moreover, the amortized time per <em>union</em>, <em>find</em>,
- *  and <em>connected</em> operation has inverse Ackermann complexity.
  *  For alternate implementations of the same API, see
- *  {@link QuickUnionUF}, {@link QuickFindUF}, and {@link WeightedQuickUnionUF}.
+ *  {@link UF}, {@link QuickFindUF}, and {@link QuickUnionUF}.
  *
  *  <p>
  *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/15uf">Section 1.5</a> of
@@ -92,14 +78,12 @@
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-
 public class MyUnionFind {
+    private int[] parent;   // parent[i] = parent of i
+    private int[] size;     // size[i] = number of sites in subtree rooted at i
+    private int count;      // number of components
+    private int n;   // number of sites
 
-    private int[] parent;  // parent[i] = parent of i
-    private byte[] rank;   // rank[i] = rank of subtree rooted at i (never more than 31)
-    private int count;     // number of components
-    private final int n;   //number of sites
-    
     /**
      * Initializes an empty union–find data structure with {@code n} sites
      * {@code 0} through {@code n-1}. Each site is initially in its own 
@@ -109,31 +93,14 @@ public class MyUnionFind {
      * @throws IllegalArgumentException if {@code n < 0}
      */
     public MyUnionFind(int n) {
-        if (n < 0) throw new IllegalArgumentException();
-        count = n;
         this.n = n;
+        count = n;
         parent = new int[n];
-        rank = new byte[n];
+        size = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
-            rank[i] = 0;
+            size[i] = 1;
         }
-    }
-
-    /**
-     * Returns the component identifier for the component containing site {@code p}.
-     *
-     * @param  p the integer representing one site
-     * @return the component identifier for the component containing site {@code p}
-     * @throws IndexOutOfBoundsException unless {@code 0 <= p < n}
-     */
-    public int find(int p) {
-        validate(p);
-        while (p != parent[p]) {
-            parent[p] = parent[parent[p]];    // path compression by halving
-            p = parent[p];
-        }
-        return p;
     }
 
     /**
@@ -145,6 +112,28 @@ public class MyUnionFind {
         return count;
     }
   
+    /**
+     * Returns the component identifier for the component containing site {@code p}.
+     *
+     * @param  p the integer representing one object
+     * @return the component identifier for the component containing site {@code p}
+     * @throws IndexOutOfBoundsException unless {@code 0 <= p < n}
+     */
+    public int find(int p) {
+        validate(p);
+        while (p != parent[p])
+            p = parent[p];
+        return p;
+    }
+
+    // validate that p is a valid index
+    private void validate(int p) {
+        int n = parent.length;
+        if (p < 0 || p >= n) {
+            throw new IndexOutOfBoundsException("index " + p + " is not between 0 and " + (n-1));  
+        }
+    }
+
     /**
      * Returns true if the the two sites are in the same component.
      *
@@ -158,7 +147,7 @@ public class MyUnionFind {
     public boolean connected(int p, int q) {
         return find(p) == find(q);
     }
-  
+
     /**
      * Merges the component containing site {@code p} with the 
      * the component containing site {@code q}.
@@ -173,26 +162,38 @@ public class MyUnionFind {
         int rootQ = find(q);
         if (rootP == rootQ) return;
 
-        // make root of smaller rank point to root of larger rank
-        if      (rank[rootP] < rank[rootQ]) parent[rootP] = rootQ;
-        else if (rank[rootP] > rank[rootQ]) parent[rootQ] = rootP;
+        // make smaller root point to larger one
+        if (size[rootP] < size[rootQ]) {
+            parent[rootP] = rootQ;
+            size[rootQ] += size[rootP];
+        }
         else {
             parent[rootQ] = rootP;
-            rank[rootP]++;
+            size[rootP] += size[rootQ];
         }
         count--;
-    }
-
-    // validate that p is a valid index
-    private void validate(int p) {
-        int n = parent.length;
-        if (p < 0 || p >= n) {
-            throw new IndexOutOfBoundsException("index " + p + " is not between 0 and " + (n-1));  
-        }
     }
     
     public boolean isAllConnected(){
         return count == 1;
+    }
+    
+    public boolean isIsolated(){
+        for(int i = 0 ; i < n ; i++){
+            if(size[i] == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isGiant(){
+        for(int i = 0 ; i < n ; i++){
+            if(size[i]*2 >= n){
+                return true;
+            }
+        }
+        return false;
     }
     
     public int getN(){

@@ -35,7 +35,7 @@ public class  GiantBook {
     }
     
     public void findStepsWithRandom() {
-        while(!isAllConnected() || !isGiant() || !isNotIsolated()){
+        while(!isAllConnected() || !isGiant() || isIsolated()){
             addRandomPair();
             analyze();
         }
@@ -51,7 +51,7 @@ public class  GiantBook {
     public void analyze(){
         if(!isAllConnected()){stepsUntilConnected++;}
         if(!isGiant()){stepsUntilGiant++;}
-        if(!isNotIsolated()){stepsUntilNotIsolated++;}         
+        if(isIsolated()){stepsUntilNotIsolated++;}         
     }
     
     public void addRandomPair(){
@@ -71,12 +71,12 @@ public class  GiantBook {
         myUnionFind.union(p, q);
     }
     
-    public boolean isNotIsolated(){
-        return true;
+    public boolean isIsolated(){
+        return myUnionFind.isIsolated();
     }
     
     public boolean isGiant(){
-        return true;
+        return myUnionFind.isGiant();
     }
     
     public boolean isAllConnected(){
