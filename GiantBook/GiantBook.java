@@ -73,11 +73,11 @@ public class  GiantBook {
     }
     
     public boolean isIsolated(){
-        return myUnionFind.isIsolated();
+        return myUnionFind.getAmountOfIsolatedSites() == 0;
     }
     
     public boolean isGiant(){
-        return myUnionFind.isGiant();
+        return (myUnionFind.getSizeOfBiggestComponent()*2 >= myUnionFind.getN());
     }
     
     public boolean isAllConnected(){

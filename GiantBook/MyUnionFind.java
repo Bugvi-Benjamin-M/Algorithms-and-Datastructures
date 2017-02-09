@@ -82,8 +82,10 @@ public class MyUnionFind {
     private int[] parent;   // parent[i] = parent of i
     private int[] size;     // size[i] = number of sites in subtree rooted at i
     private int count;      // number of components
-    private int n;   // number of sites
-
+    private final int n;   // number of sites
+    private int sizeOfBiggestComponent;   //size of the biggest component
+    private int amountOfIsolatedSites;
+    
     /**
      * Initializes an empty union–find data structure with {@code n} sites
      * {@code 0} through {@code n-1}. Each site is initially in its own 
@@ -93,13 +95,15 @@ public class MyUnionFind {
      * @throws IllegalArgumentException if {@code n < 0}
      */
     public MyUnionFind(int n) {
+        sizeOfBiggestComponent = 1;
+        amountOfIsolatedSites = n;
         this.n = n;
         count = n;
         parent = new int[n];
         size = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
-            size[i] = 1;
+            size[i] = sizeOfBiggestComponent;
         }
     }
 
@@ -165,12 +169,21 @@ public class MyUnionFind {
         // make smaller root point to larger one
         if (size[rootP] < size[rootQ]) {
             parent[rootP] = rootQ;
+            changeAmountOfIsolatedSites(size[rootP],size[rootQ]);
             size[rootQ] += size[rootP];
+            if(size[rootQ] > sizeOfBiggestComponent){
+                sizeOfBiggestComponent = size[rootQ];
+            }
         }
         else {
             parent[rootQ] = rootP;
+            changeAmountOfIsolatedSites(size[rootP],size[rootQ]);
             size[rootP] += size[rootQ];
+            if(size[rootP] > sizeOfBiggestComponent){
+                sizeOfBiggestComponent = size[rootP];
+            }
         }
+         
         count--;
     }
     
@@ -178,34 +191,20 @@ public class MyUnionFind {
         return count == 1;
     }
     
-    public boolean isIsolated(){
-        for(int i = 0 ; i < n ; i++){
-            if(size[i] == 1){
-                return true;
-            }
-        }
-        return false;
+    public int getAmountOfIsolatedSites(){
+        return amountOfIsolatedSites;
     }
     
-    public boolean isGiant(){
-        int temp;
-        if(n%2 == 1){
-            temp = (n+1)/2;
-        }
-        else{
-            temp = n/2;
-        }
-        for(int i = 0 ; i < n ; i++){
-            
-            if(size[i] >= temp){
-                return true;
-            }
-        }
-        return false;
+    public int getSizeOfBiggestComponent(){
+        return sizeOfBiggestComponent;
     }
     
     public int getN(){
         return n;
     }
+    
+    private void changeAmountOfIsolatedSites(int sizeP, int sizeQ){
+        if(sizeP == 1){amountOfIsolatedSites--;}
+        if(sizeQ == 1){amountOfIsolatedSites--;}
+    }
 }
-
