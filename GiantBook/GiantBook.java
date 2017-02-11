@@ -42,19 +42,22 @@ public class  GiantBook {
             double connectedMean = StdStats.mean(connectedResults);
             double connectedStdDev = StdStats.stddev(connectedResults);
   
-            StdOut.println("N = " + n);
-            StdOut.println("T = " + t);
-            StdOut.print("Isolated Mean StdDev");
-            StdOut.printf("%.2e ",isolatedMean);
-            StdOut.printf("%.2e\n",isolatedStdDev);
+            StdOut.println("N (number of sites) = " + n);
+            StdOut.println("T (number of experiments) = " + t);
+            StdOut.print("\nNon Isolated Mean ");
+            StdOut.printf("%.2e\n",isolatedMean);
+            StdOut.print("Non Isolated StdDev ");
+            StdOut.printf("%.2e\n\n",isolatedStdDev);
             
-            StdOut.print("Giant Mean StdDev");
-            StdOut.printf("%.2e ",giantMean);
-            StdOut.printf("%.2e\n",giantStdDev);
+            StdOut.print("Giant Mean ");
+            StdOut.printf("%.2e\n",giantMean);
+            StdOut.print("Giant StdDev ");
+            StdOut.printf("%.2e\n\n",giantStdDev);
             
-            StdOut.print("Connected Mean StdDev");
-            StdOut.printf("%.2e ",connectedMean);
-            StdOut.printf("%.2e\n",connectedStdDev);
+            StdOut.print("Connected Mean ");
+            StdOut.printf("%.2e\n",connectedMean);
+            StdOut.print("Connected StdDev ");
+            StdOut.printf("%.2e\n\n",connectedStdDev);
         }
         
     }
