@@ -1,19 +1,20 @@
 import java.util.Iterator;
 
 public class RandomQueue<Item> implements Iterable<Item>{
+    private int size;
+
     public RandomQueue(){
         // create an empty random queue
     }
     public boolean isEmpty(){
-        // is it empty?
-        return false;
+        return size == 0; // is it empty?
     }
     public int size(){
-        // return the number of elements
-        return 0;
+        return size; // return the number of elements
     }
     public void enqueue(Item item){
         // add an item
+        size++;
     }
     public Item sample(){
         // return (but do not remove) a random item
@@ -21,6 +22,7 @@ public class RandomQueue<Item> implements Iterable<Item>{
     }
     public Item dequeue(){
         // remove and return a random item
+        size--;
         return null;
     }
     public Iterator<Item> iterator(){
