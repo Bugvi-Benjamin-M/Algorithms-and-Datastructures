@@ -53,7 +53,7 @@ public class RandomQueue<Item> implements Iterable<Item>{
     // remove and return a random item
     public Item dequeue(){
         if (size == 0){
-        throw new RuntimeException();
+            throw new RuntimeException("Cannot dequeue from empty queue");
         }
         int random = randomInt(size);
         Item temp = collection[random];
@@ -92,7 +92,7 @@ public class RandomQueue<Item> implements Iterable<Item>{
         return StdRandom.uniform(range);
     }
     
-    private Item[] toArray()
+    public Item[] toArray()
     {
         Item[] array = (Item[])new Object[size];
         for(int i = 0 ; i < size ; i++){
