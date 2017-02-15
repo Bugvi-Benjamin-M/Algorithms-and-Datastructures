@@ -12,6 +12,11 @@ public class RandomQueue<Item> implements Iterable<Item>{
         this(DEFAULT_CAPACITY);
     }
     
+    public RandomQueue(Item[] array){
+        this.collection = array;
+        this.size = array.length;
+    }
+    
     public RandomQueue(int capacity){
         collection = (Item[])new Object[capacity];
     }
@@ -84,13 +89,22 @@ public class RandomQueue<Item> implements Iterable<Item>{
     }
     
     private int randomInt(int range){
-        long systemTime = System.currentTimeMillis();
-        return (int)(75000 * systemTime + 72701)%range;
+        return StdRandom.uniform(range);
+    }
+    
+    private Item[] toArray()
+    {
+        Item[] array = (Item[])new Object[size];
+        for(int i = 0 ; i < size ; i++){
+        array[i] = collection[i];
+        }
+        return array;
     }
     
     // return an iterator over the items in random order
     public Iterator<Item> iterator(){
-        return new RandomQueueIterator(this);
+        RandomQueue<Item> copy = new RandomQueue<Item>(this.toArray());
+        return new RandomQueueIterator(copy);
     }
     
     private class RandomQueueIterator implements Iterator<Item>
