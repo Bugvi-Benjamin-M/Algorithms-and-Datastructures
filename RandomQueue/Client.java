@@ -1,3 +1,7 @@
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdStats;
+import java.util.Iterator;
+
 // Alt denne kode skal indsættes ind i RandomQueue klassen
 public class Client {
 
