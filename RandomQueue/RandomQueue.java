@@ -25,6 +25,7 @@ public class RandomQueue<Item> implements Iterable<Item>{
     private int size = 0;
     private Item[] collection;
 
+
     /**
      * Constructor that creates a RandomQueue object using the default capacity of 10.
      */
@@ -38,6 +39,7 @@ public class RandomQueue<Item> implements Iterable<Item>{
     public RandomQueue(Item[] array){
         this.collection = array;
         this.size = array.length;
+        
     }
 
     /**
@@ -56,7 +58,7 @@ public class RandomQueue<Item> implements Iterable<Item>{
     }
 
     /**
-     * Returns the size of the RandomQueue (the amount of elements contained in the collection)
+     * Returns the size of the RandomQueue (the amount of elements retained in the collection)
      */
     public int size(){
         return size; // return the number of elements
@@ -89,7 +91,7 @@ public class RandomQueue<Item> implements Iterable<Item>{
      */
     public Item sample(){
         if (size == 0){
-        throw new RuntimeException();
+        throw new RuntimeException("Cannot sample from empty queue");
         }
         return collection[randomInt(size)];
     }
@@ -97,8 +99,8 @@ public class RandomQueue<Item> implements Iterable<Item>{
     /**
      * Finds, removes and returns a random item from the RandomQueue.
      *
-     * If the RandomQueue contains a number of items around 1/4th of
-     * the capacity of the RandomQueue, then it will decrease the object's capacity.
+     * If the  number of items currently held in the RandomQueue drops below 1/4th of
+     * the capacity of the RandomQueue, the object's capacity will be decreased by 1/2.
      *
      * Expect performance drops when decreasing the capacity.
      */
@@ -147,9 +149,11 @@ public class RandomQueue<Item> implements Iterable<Item>{
 
     /**
      * Returns a random number between 0 and the given range (excluding).
+     * Please note the attempt at creating a random number generator from scratch.
+     * It has been commented out.
      */
-    private int randomInt(int range){
-        return StdRandom.uniform(range);
+    private int randomInt(int range){   
+        return StdRandom.uniform(range);   
     }
 
     /**
@@ -167,7 +171,8 @@ public class RandomQueue<Item> implements Iterable<Item>{
      * Returns a Iterator over the items in the collection
      */
     public Iterator<Item> iterator(){
-        return new RandomQueueIterator<>(this);
+
+        return new RandomQueueIterator(this);
     }
 
     /**
