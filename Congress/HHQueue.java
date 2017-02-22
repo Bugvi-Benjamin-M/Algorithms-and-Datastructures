@@ -1,16 +1,16 @@
+import edu.princeton.cs.algs4.*;
 /**
  * Priory Queue using the Huntington-Hill method
  */
 public class HHQueue{
 
     private State[] collection;
-    private long size;
-    private int capacity;
+    private int size;
 
     class State {
         double priority;
         int allocatedSeats = 1;
-        long population;
+        int population;
         String name;
 
         void calculatePriority() {
@@ -22,11 +22,10 @@ public class HHQueue{
 
     public HHQueue(int capacity) {
         collection = new State[capacity+1];
-        this.capacity = capacity;
         this.size = 0;
     }
 
-    public void insert(String stateName, long population) {
+    public void insert(String stateName, int population) {
         State newState = new State();
         newState.name = stateName;
         newState.population = population;
@@ -67,5 +66,17 @@ public class HHQueue{
         State child = collection[positionOfChild];
         collection[positionOfParent] = child;
         collection[positionOfChild] = parent;
+    }
+    
+    public void addSeat(){
+        collection[1].allocatedSeats++;
+        collection[1].calculatePriority();
+        sink(1);
+    }
+    
+    public void printContents(){
+        for(int i = 1 ; i < collection.length ; i++){
+            StdOut.println(collection[i].name + " " + collection[i].allocatedSeats);
+        }
     }
 }
