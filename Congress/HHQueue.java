@@ -15,8 +15,7 @@ public class HHQueue{
 
         void calculatePriority() {
             priority = (population /
-                    Math.sqrt(
-                            allocatedSeats * (allocatedSeats + 1)));
+                    Math.sqrt(allocatedSeats * (allocatedSeats + 1)));
         }
     }
 
