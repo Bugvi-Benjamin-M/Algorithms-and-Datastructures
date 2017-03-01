@@ -1,61 +1,37 @@
-/******************************************************************************
- *  Compilation:  javac Mergesort.java
- *  Execution:    java Mergesort N
- *  Dependencies: StdOut.java StdRandom.java
- *  
- *  Generate N pseudo-random numbers between 0 and 1 and mergesort them.
- *
- ******************************************************************************/
+class RunSort
+{
+  private static Comparable[] aux; // auxiliary array for merges
+  // See page 271 for merge() code.
+  public static void sort(Comparable[] a)
+  { // Do lg N passes of pairwise merges.
+  }
 
-public class Mergesort {
+  public static void merge(Comparable[] a, int lo, int mid, int hi)
+  { // Merge a[lo..mid] with a[mid+1..hi].
+    int i = lo, j = mid + 1;
+    for (int k = lo; k <= hi; k++) // Copy a[lo..hi] to aux[lo..hi].
+      aux[k] = a[k];
+    for (int k = lo; k <= hi; k++) // Merge back to a[lo..hi].
+      if (i > mid)
+        a[k] = aux[j++];
+      else if (j > hi)
+        a[k] = aux[i++];
+      else if (less(aux[j], aux[i]))
+        a[k] = aux[j++];
+      else
+        a[k] = aux[i++];
+  }
 
-    private static double[] merge(double[] a, double[] b) {
-        double[] c = new double[a.length + b.length];
-        int i = 0, j = 0;
-        for (int k = 0; k < c.length; k++) {
-            if      (i >= a.length) c[k] = b[j++];
-            else if (j >= b.length) c[k] = a[i++];
-            else if (a[i] <= b[j])  c[k] = a[i++];
-            else                    c[k] = b[j++];
-        }
-        return c;
-    }
+  private static boolean less(Comparable v, Comparable w)
+  {
+    return v.compareTo(w) < 0;
+  }
 
-    public static double[] mergesort(double[] input) {
-        int N = input.length;
-        if (N <= 1) return input;
-        double[] a = new double[N/2];
-        double[] b = new double[N - N/2];
-        for (int i = 0; i < a.length; i++)
-            a[i] = input[i];
-        for (int i = 0; i < b.length; i++)
-            b[i] = input[i + N/2];
-        return merge(mergesort(a), mergesort(b));
-    }
-
-
-   /***************************************************************************
-    *  Check if array is sorted - useful for debugging.
-    ***************************************************************************/
-    private static boolean isSorted(double[] a) {
-        for (int i = 1; i < a.length; i++)
-            if (a[i] < a[i-1]) return false;
-        return true;
-    }
-
-
-
-    // generate N real numbers between 0 and 1, and mergesort them
-    public static void main(String[] args) {
-        int N = Integer.parseInt(args[0]);
-        double[] a = new double[N];
-        for (int i = 0; i < N; i++)
-            a[i] = StdRandom.uniform();
-        a = mergesort(a);
-        for (int i = 0; i < N; i++)
-            StdOut.println(a[i]);
-
-        StdOut.println(isSorted(a));
-    }
+  public static boolean isSorted(Comparable[] a)
+  { // Test whether the array entries are in order.
+    for (int i = 1; i < a.length; i++)
+      if (less(a[i], a[i - 1]))
+        return false;
+    return true;
+  }
 }
-
