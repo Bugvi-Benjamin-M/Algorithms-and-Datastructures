@@ -1,3 +1,6 @@
+import edu.princeton.cs.algs4.*;
+
+
 class RunSort
 {
   private static Comparable[] aux; // auxiliary array for merges
@@ -9,20 +12,25 @@ class RunSort
       int high = 0;
       int mid = 0; 
       
+      
       while(true) {
           while(low < a.length-1) {
+
               mid = findPointer(a, low);
               if(mid == a.length-1) {
                   break;
               }
               high = findPointer(a, mid + 1);
+              
               merge(a, low, mid, high);
+
               low = high + 1;
           } 
           if(isSorted(a)) {
               break;
           } else {
               low = 0;
+              show(a);
           }
       }
   }
@@ -62,12 +70,27 @@ class RunSort
           if(start == a.length-1) {
               break;
               
-              } else if(less(a[start], a[start+1])) {
+              } else if(less(a[start+1], a[start])) {
                   break;
               }
           start++;
       }
       return start;
   }
+  
+  private static void show(Comparable[] a) { 
+      // Print the array, on a single line. 
+      for (int i = 0; i < a.length; i++) StdOut.print(a[i] + " "); 
+      StdOut.println(); 
+  }
+  
+  public static void main(String[] args) { 
+      // Read strings from standard input, sort them, and print.
+      String[] a = StdIn.readAllStrings();
+      sort(a); 
+      assert isSorted(a); 
+      show(a); 
+  } 
 }
+
 
