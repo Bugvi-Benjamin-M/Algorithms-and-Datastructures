@@ -37,6 +37,7 @@ public class FancyRunSort {
                         } else {
                                 low = 0;
                                 numberOfRounds++;
+                                StdStats.plotBars(a);
                         }
                 }
         }
