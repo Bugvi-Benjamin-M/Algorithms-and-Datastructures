@@ -1,16 +1,18 @@
 import edu.princeton.cs.algs4.*;
 
-class RunSort {
+public class FancyRunSort {
         private static Comparable[] aux; // auxiliary array for merges
-        private static int numberOfOperationsInThisProgramLOL;
-        private static int numberOfRunsInThisProgramLOLBlanke;
+        private static int numberOfRounds;
+        private static int numberOfMergeRuns;
+        private static int numberOfInsertionRuns;
         public static void sort(Comparable[] a) {
                 aux = new Comparable[a.length];
                 int low = 0;
                 int high = 0;
                 int mid = 0;
-                numberOfOperationsInThisProgramLOL = 0;
-                numberOfRunsInThisProgramLOLBlanke = 0;
+                numberOfRounds = 0;
+                numberOfMergeRuns = 0;
+                numberOfInsertionRuns = 0;
 
                 while (true) {
                         while (low < a.length - 1) {
@@ -20,17 +22,21 @@ class RunSort {
                                         break;
                                 }
                                 high = findPointer(a, mid + 1);
-
-                                merge(a, low, mid, high);
-
+                                
+                                if((high - low) > 8) {
+                                    merge(a, low, mid, high);
+                                    numberOfMergeRuns++;
+                                } else {
+                                    insertionSort(a, low, high);
+                                    numberOfInsertionRuns++;
+                                }
                                 low = high + 1;
-                                numberOfRunsInThisProgramLOLBlanke++;
                         }
                         if (isSorted(a)) {
                                 break;
                         } else {
                                 low = 0;
-                                numberOfOperationsInThisProgramLOL++;
+                                numberOfRounds++;
                         }
                 }
         }
@@ -52,6 +58,19 @@ class RunSort {
                         else
                                 a[k] = aux[i++];
         }
+        
+    public static void insertionSort(Comparable[] a, int lo, int hi) {
+        for (int i = lo; i <= hi; i++) {
+            for (int j = i; j > lo && less(a[j], a[j-1]); j--) {
+                exch(a, j, j-1);
+            }
+        }
+    }
+        private static void exch(Object[] a, int i, int j) {
+        Object swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+    }
 
         private static boolean less(Comparable v, Comparable w) {
                 return v.compareTo(w) < 0;
@@ -81,8 +100,10 @@ class RunSort {
         private static void show(Comparable[] a) {
                 // Print the array, on a single line.
                 for (int i = 0; i < a.length; i++)
-                        StdOut.print(a[i] + " ");
+                StdOut.print(a[i] + " ");
                 StdOut.println();
+                StdOut.println("Rounds: " + numberOfRounds);
+                StdOut.println("Merges: " + numberOfMergeRuns + "\n" + "Insertions: " + numberOfInsertionRuns);
         }
 
         public static void main(String[] args) {
@@ -91,7 +112,6 @@ class RunSort {
                 sort(a);
                 assert isSorted(a);
                 show(a);
-                StdOut.println(numberOfOperationsInThisProgramLOL);
-                StdOut.println(numberOfRunsInThisProgramLOLBlanke);
+                
         }
 }
