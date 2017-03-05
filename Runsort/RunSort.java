@@ -2,8 +2,8 @@ import edu.princeton.cs.algs4.*;
 
 /**
  * This class implements a runsort algorithm, using several standard bottom up merge sort
- * methods. However, the sort method is behaves differently and utlises natural
- * orders that might already exist in the given array. This is know as natural merge sort. 
+ * methods. However, the sort method behaves differently and utilises natural
+ * orders that might already exist in the given array. This is known as natural merge sort. 
  * @author Andreas Blanke
  * @author Jakob Mollerup
  * @author Búgvi Magnussen
