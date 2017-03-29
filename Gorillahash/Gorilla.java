@@ -52,7 +52,6 @@ public class Gorilla{
 
     public void addSubstrings(){
         int counter = 0;
-        String proteinCode = this.proteinCode.toString();
         StdOut.println("Size: "+proteinCode.length()+" divided by "+substringLength);
         for(int i = 0 ; i <= proteinCode.length() - substringLength ; i++){
             put(proteinCode.substring(i, i + substringLength));
