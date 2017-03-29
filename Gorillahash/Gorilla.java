@@ -8,16 +8,17 @@ public class Gorilla{
     String[] keys;
     int[] values;
     String name;
-    String proteinCode = "";
+    StringBuilder proteinCode;
     
     public Gorilla(String name){
+        proteinCode = new StringBuilder();
         keys = new String[dimension];
         values = new int[dimension];
         this.name = name;
     }
     
     public void appendProteinCode(String proteinCode){
-        this.proteinCode = this.proteinCode + proteinCode;
+        this.proteinCode.append(proteinCode);
     }
     
     public String getName(){
@@ -50,8 +51,13 @@ public class Gorilla{
     }
     
     public void addSubstrings(){
+        int counter = 0;
+        String proteinCode = this.proteinCode.toString();
+        StdOut.println("Size: "+proteinCode.length()+" divided by "+substringLength);
         for(int i = 0 ; i <= proteinCode.length() - substringLength ; i++){
             put(proteinCode.substring(i, i + substringLength));
+            counter++;
+            if (counter % 100 == 0) StdOut.println("... substrings: "+counter);
         }
     }
     
@@ -113,11 +119,14 @@ public class Gorilla{
             } // ignore if both is there (impossible)
             if(nCodes % 1000 == 0) StdOut.println(""+name+":"+nCodes);
         }
-        
+
+        StdOut.println("Finding and adding substrings...");
         for(Gorilla g : list){
             g.addSubstrings();
+            StdOut.println("Added substrings to: "+g.name);
         }
 
+        StdOut.println("Comparing gorillas...");
         for (int j = 0; j < list.size(); j++) {
             int[] compare = list.get(j).getValues();
             for (int i = 0; i < list.size(); i++) {
