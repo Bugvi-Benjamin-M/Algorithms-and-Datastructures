@@ -83,30 +83,47 @@ public class Gorilla{
     public static void main(String[] args){
         ArrayList<Gorilla> list = new ArrayList<Gorilla>();
         
-        String input;
-        Gorilla gorilla = new Gorilla("Gorilla for life");
+        String input, name = "ignore";
+        int nCodes = 0;
+        Gorilla gorilla = new Gorilla(name);
         
         while(!StdIn.isEmpty()){
-            input = StdIn.readLine();
-            if(input.charAt(0) == '>'){
-                gorilla = new Gorilla(input);
-                list.add(gorilla);
-            }
-            else{
+            input = StdIn.readString();
+            int indexOfName = input.indexOf('>');
+            int indexOfCode = input.indexOf('_');
+            //StdOut.println(index);
+
+            if (indexOfName == -1 && indexOfCode == -1) {
+                // doesnt have name or code (read as code?)
                 gorilla.appendProteinCode(input);
-            }
+                nCodes++;
+            } else if (indexOfName == -1 && indexOfCode != -1) {
+                // doesnt have name, have code
+                nCodes = 1;
+                gorilla.appendProteinCode(
+                        input.substring(indexOfCode+1,input.length()));
+            } else if (indexOfName != -1 && indexOfCode == -1) {
+                // have name but not code
+                gorilla.appendProteinCode(
+                        input.substring(0,indexOfName));
+                nCodes++;
+                name = input.substring(indexOfName + 1, input.length());
+                gorilla = new Gorilla(name);
+                list.add(gorilla);
+            } // ignore if both is there (impossible)
+            if(nCodes % 1000 == 0) StdOut.println(""+name+":"+nCodes);
         }
         
         for(Gorilla g : list){
             g.addSubstrings();
         }
-        
-        int[] compare = list.get(0).getValues();
-        for(int i = 0 ; i < list.size() ; i++){
-            StdOut.println(list.get(i).getName());
-            StdOut.println("" + vectorAngle(compare, list.get(i).getValues()));
-        
+
+        for (int j = 0; j < list.size(); j++) {
+            int[] compare = list.get(j).getValues();
+            for (int i = 0; i < list.size(); i++) {
+                StdOut.println(list.get(i).getName());
+                StdOut.println("" + vectorAngle(compare, list.get(i).getValues()));
+            }
         }
-        
     }
 }
