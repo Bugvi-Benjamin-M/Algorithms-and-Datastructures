@@ -18,7 +18,8 @@ public class Gorilla{
     }
     
     public void appendProteinCode(String proteinCode){
-        this.proteinCode.append(proteinCode);
+        this.put(proteinCode);
+        // this.proteinCode.append(proteinCode);
     }
     
     public String getName(){
@@ -120,11 +121,12 @@ public class Gorilla{
             if(nCodes % 1000 == 0) StdOut.println(""+name+":"+nCodes);
         }
 
+        /*
         StdOut.println("Finding and adding substrings...");
         for(Gorilla g : list){
             g.addSubstrings();
             StdOut.println("Added substrings to: "+g.name);
-        }
+        }*/
 
         StdOut.println("Comparing gorillas...");
         for (int j = 0; j < list.size(); j++) {
