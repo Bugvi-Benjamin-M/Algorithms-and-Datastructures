@@ -3,14 +3,15 @@ import java.util.*;
 
 public class Gorilla{
 
-    int dimension = 100000000;  //d
+    int dimension;  //d
     static int substringLength = 20;  //k
     String[] keys;
     int[] values;
     String name;
     StringBuilder proteinCode;
 
-    public Gorilla(String name){
+    public Gorilla(String name, int dimension){
+        this.dimension = dimension;
         proteinCode = new StringBuilder();
         keys = new String[dimension];
         values = new int[dimension];

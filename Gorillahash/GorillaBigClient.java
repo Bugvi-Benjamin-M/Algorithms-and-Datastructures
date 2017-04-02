@@ -13,8 +13,9 @@ public class GorillaBigClient {
         ArrayList<Gorilla> list = new ArrayList<>();
 
         String input, name = "ignore";
+        int dimension = 100000000;
         int nCodes = 0;
-        Gorilla gorilla = new Gorilla(name);
+        Gorilla gorilla = new Gorilla(name,dimension);
 
         while(!StdIn.isEmpty()){
             input = StdIn.readString();
@@ -38,7 +39,7 @@ public class GorillaBigClient {
                 nCodes++;
                 gorilla.addSubstrings();
                 name = input.substring(indexOfName + 1, input.length());
-                gorilla = new Gorilla(name);
+                gorilla = new Gorilla(name,dimension);
                 list.add(gorilla);
             } // ignore if both is there (impossible)
             // if(nCodes % 1000 == 0) StdOut.println(""+name+":"+nCodes);
