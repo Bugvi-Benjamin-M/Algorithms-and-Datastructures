@@ -122,6 +122,15 @@ public class TestGorilla {
     }
 
     @Test
+    public void testLengthDecimal() {
+        int[] a = new int[] {1,2,3,4,5};
+        printContents(a);
+        double length = Gorilla.vectorLength(a);
+        System.out.println("Length: "+length);
+        assertEquals(7.416,length,0.001);
+    }
+
+    @Test
     public void testLengthFives() {
         int[] a = new int[] {5,5,5,5};
         printContents(a);
