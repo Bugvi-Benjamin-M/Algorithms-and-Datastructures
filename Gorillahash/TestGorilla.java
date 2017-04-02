@@ -13,7 +13,7 @@ public class TestGorilla {
     public void testCos() {
         int[] a = new int[] {0,1};
         int[] b = new int[] {0,1};
-        double angle = Gorilla.vectorAngle(a,b);
+        double angle = Gorilla.vectorCosAngle(a,b);
         printContents(a);
         printContents(b);
         System.out.println("Angle: "+angle+"\n");
@@ -24,7 +24,7 @@ public class TestGorilla {
     public void testCosDiffValuesInFirst() {
         int[] a = new int[] {0,1};
         int[] b = new int[] {1,0};
-        double angle = Gorilla.vectorAngle(a,b);
+        double angle = Gorilla.vectorCosAngle(a,b);
         printContents(a);
         printContents(b);
         System.out.println("Angle: "+angle);
@@ -35,7 +35,7 @@ public class TestGorilla {
     public void testCosDiffValuesInSecond() {
         int[] a = new int[] {0,1};
         int[] b = new int[] {0,2};
-        double angle = Gorilla.vectorAngle(a,b);
+        double angle = Gorilla.vectorCosAngle(a,b);
         printContents(a);
         printContents(b);
         System.out.println("Angle: "+angle);
@@ -46,7 +46,7 @@ public class TestGorilla {
     public void testCosWithNegative() {
         int[] a = new int[] {0,1};
         int[] b = new int[] {0,-1};
-        double angle = Gorilla.vectorAngle(a,b);
+        double angle = Gorilla.vectorCosAngle(a,b);
         printContents(a);
         printContents(b);
         System.out.println("Angle: "+angle);
@@ -55,11 +55,11 @@ public class TestGorilla {
 
     @Test
     public void testCosManyNumbers() {
-        int[] a = new int[100000];
-        int[] b = new int[100000];
+        int[] a = new int[10000];
+        int[] b = new int[10000];
         a[0] = 1;
-        b[99999] = 1;
-        double angle = Gorilla.vectorAngle(a,b);
+        b[9999] = 1;
+        double angle = Gorilla.vectorCosAngle(a,b);
         printContents(a);
         printContents(b);
         System.out.println("Angle: "+angle);
@@ -72,7 +72,7 @@ public class TestGorilla {
         int[] b = new int[] {0,1};
         printContents(a);
         printContents(b);
-        Gorilla.vectorAngle(a,b);
+        Gorilla.vectorCosAngle(a,b);
         System.out.println("ArrayIndexOutOfBoundsException not thrown!");
     }
 

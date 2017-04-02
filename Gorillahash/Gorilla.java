@@ -77,7 +77,7 @@ public class Gorilla{
         return Math.sqrt(sum);
     }
 
-    public static double vectorAngle(int[] a, int[] b){
+    public static double vectorCosAngle(int[] a, int[] b){
         double angle;
         angle = (double) (dotProduct(a, b)) / (vectorLength(a) * vectorLength(b));
         return angle;
@@ -136,7 +136,7 @@ public class Gorilla{
         for (int j = 0; j < list.size(); j++) {
             int[] compare = list.get(j).getValues();
             for (int i = 0; i < list.size(); i++) {
-                double result = vectorAngle(compare, list.get(i).getValues());
+                double result = vectorCosAngle(compare, list.get(i).getValues());
                 results[j][i] = (int) (Math.floor(result * 100));
             }
         }
