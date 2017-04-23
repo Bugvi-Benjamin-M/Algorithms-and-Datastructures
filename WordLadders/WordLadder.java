@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class WordLadder extends Digraph {
 
-    private final static boolean DEBUG_MODE_ACTIVE = true;
+    private final static boolean DEBUG_MODE_ACTIVE = false; // change me to display more info
     private String[] words;
 
     public WordLadder(ArrayList<String> words) {
@@ -102,7 +102,7 @@ public class WordLadder extends Digraph {
                 if(DEBUG_MODE_ACTIVE) StdOut.println();
             }
         } catch (IOException e) {
-            // lul wat
+            e.printStackTrace();
         }
         reader.close();
     }
@@ -113,11 +113,10 @@ public class WordLadder extends Digraph {
         try {
             String read = null;
             while((read = reader.readLine()) != null) {
-                //String read = reader.readLine();
                 words.add(read);
             }
         } catch (IOException e) {
-            // lul wat
+            e.printStackTrace();
         }
         reader.close();
         return new WordLadder(words);
