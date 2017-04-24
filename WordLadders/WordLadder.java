@@ -61,7 +61,7 @@ public class WordLadder extends Digraph {
     }
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+        //long startTime = System.currentTimeMillis();
         if(args.length != 3) {
             try {
                 WordLadder wordLadder = loadBuildFile(args[0]);
@@ -70,7 +70,7 @@ public class WordLadder extends Digraph {
                 e.printStackTrace();
             }
         }
-        StdOut.println("Runtime: "+(System.currentTimeMillis()-startTime)+" ms");
+        //StdOut.println("Runtime: "+(System.currentTimeMillis()-startTime)+" ms");
     }
 
     private static void loadInFile(String file, WordLadder wordLadder)
@@ -84,22 +84,22 @@ public class WordLadder extends Digraph {
                         wordLadder,wordLadder.indexOfWord(path[0]));
                 int compared = wordLadder.indexOfWord(path[1]);
                 boolean hasPath = BFS.hasPathTo(compared);
-                if(DEBUG_MODE_ACTIVE) StdOut.println("Has path: "+hasPath);
+                //if(DEBUG_MODE_ACTIVE) StdOut.println("Has path: "+hasPath);
                 if (hasPath) {
-                    if(DEBUG_MODE_ACTIVE) StdOut.print("Dist: ");
+                    //if(DEBUG_MODE_ACTIVE) StdOut.print("Dist: ");
                     StdOut.println(BFS.distTo(compared));
-                    if(DEBUG_MODE_ACTIVE) {
+                    /*if(DEBUG_MODE_ACTIVE) {
                         StdOut.print("Path: ");
                         for (int index : BFS.pathTo(compared)) {
                             StdOut.print(" -> " + wordLadder.getWord(index));
                         }
                         StdOut.println();
-                    }
+                    }*/
                 } else {
-                    if(DEBUG_MODE_ACTIVE) StdOut.print("Dist: ");
+                    //if(DEBUG_MODE_ACTIVE) StdOut.print("Dist: ");
                     StdOut.println("-1");
                 }
-                if(DEBUG_MODE_ACTIVE) StdOut.println();
+                //if(DEBUG_MODE_ACTIVE) StdOut.println();
             }
         } catch (IOException e) {
             e.printStackTrace();
