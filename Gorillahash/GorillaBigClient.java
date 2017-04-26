@@ -10,7 +10,7 @@ import java.util.*;
 public class GorillaBigClient {
 
     public static void main(String[] args){
-        ArrayList<Gorilla> list = new ArrayList<>();
+        ArrayList<Gorilla> list = new ArrayList();
 
         String input, name = "ignore";
         int dimension = 100000000;

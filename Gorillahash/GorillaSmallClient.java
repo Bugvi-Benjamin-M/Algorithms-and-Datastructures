@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class GorillaSmallClient {
 
     public static void main(String[] args){
-        ArrayList<Gorilla> list = new ArrayList<>();
+        ArrayList<Gorilla> list = new ArrayList();
 
         String input; int dimension = 10000;
         Gorilla gorilla = new Gorilla("Gorilla for life",10000);

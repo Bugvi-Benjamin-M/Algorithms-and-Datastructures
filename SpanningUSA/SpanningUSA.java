@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Spanning USA assignment. 
  * @author Jakob Mollerup
- * @author Búgvi Magnussen
+ * @author Benjamin Magnussen
  * @author Andreas Blanke
  * @author Niclas Hedam
  * 
@@ -13,22 +13,20 @@ import java.util.*;
 
 public class SpanningUSA extends EdgeWeightedGraph {
     
-    private static HashMap<String, Integer> cityToIdMap = new HashMap<>();
-    private static HashMap<Integer, String> idToCityMap = new HashMap<>();
+    private static HashMap<String, Integer> cityToIdMap = new HashMap();
+    private static HashMap<Integer, String> idToCityMap = new HashMap();
     private static int counter = 0;
     
     public SpanningUSA() {
         super(counter);
-        
     }
-    
     
     public static boolean isVertex(String line) {
         return !line.contains("--");
     }
     
     public static int parseVertex(String line) {
-        String regex = "\"*(.+)\"*";
+        String regex = "\"?(.+)\"?";
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(line);
         return stringToInt(m.group(0));
@@ -41,8 +39,7 @@ public class SpanningUSA extends EdgeWeightedGraph {
         Edge edge = new Edge(stringToInt(m.group(0)), stringToInt(m.group(1)), 
                              Integer.parseInt(m.group(2)));
         return edge;
-    }
-   
+    } 
     
     public static int stringToInt(String string) {
         if(!cityToIdMap.containsKey(string)) {
@@ -60,7 +57,7 @@ public class SpanningUSA extends EdgeWeightedGraph {
     
     public static void main(String[] args) {
         
-        Bag<Edge> edges = new Bag<>();
+        Bag<Edge> edges = new Bag();
         
         
         while(!StdIn.isEmpty()) {
@@ -70,12 +67,18 @@ public class SpanningUSA extends EdgeWeightedGraph {
             } else {
                 Edge edge = parseEdge(s);
                 edges.add(edge);
-                
             }
         }
         SpanningUSA spanning = new SpanningUSA();
         for(Edge e : edges) {
             spanning.addEdge(e);
         }
+        PrimMST prim = new PrimMST(spanning);
+        for(Edge e : prim.edges()){
+            StdOut.print(getCityName(e.either()));
+            StdOut.print("-");
+            StdOut.println(getCityName(e.other(e.either())));
+        }
+        StdOut.println("Weight: " + prim.weight());
     }
 }
