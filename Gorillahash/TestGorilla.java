@@ -103,6 +103,51 @@ public class TestGorilla {
         assertEquals(10000.0,length,0.001);
     }
 
+    @Test
+    public void testLengthNegative(){
+        int[] a = new int[] {2,-3,6};
+        printContents(a);
+        double length = Gorilla.vectorLength(a);
+        System.out.println("Length: "+length);
+        assertEquals(7.0,length,0.001);
+    }
+
+    @Test
+    public void testLengthRepeated() {
+        int[] a = new int[] {2,4,2,4,2,4,2,4,2,4};
+        printContents(a);
+        double length = Gorilla.vectorLength(a);
+        System.out.println("Length: "+length);
+        assertEquals(10.0,length,0.001);
+    }
+
+    @Test
+    public void testLengthDecimal() {
+        int[] a = new int[] {1,2,3,4,5};
+        printContents(a);
+        double length = Gorilla.vectorLength(a);
+        System.out.println("Length: "+length);
+        assertEquals(7.416,length,0.001);
+    }
+
+    @Test
+    public void testLengthFives() {
+        int[] a = new int[] {5,5,5,5};
+        printContents(a);
+        double length = Gorilla.vectorLength(a);
+        System.out.println("Length: "+length);
+        assertEquals(10.0,length,0.001);
+    }
+
+    @Test
+    public void testLengthOrdered() {
+        int[] a = new int[] {3,4,5,3,4,5};
+        printContents(a);
+        double length = Gorilla.vectorLength(a);
+        System.out.println("Length: "+length);
+        assertEquals(10.0,length,0.001);
+    }
+
     private void printContents(int[] array) {
         System.out.print("Contents: ");
         for (int number: array) {
