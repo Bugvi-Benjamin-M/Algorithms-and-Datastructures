@@ -26,7 +26,7 @@ public class SpanningUSA extends EdgeWeightedGraph {
     }
 
     public static int parseVertex(String line) {
-        String regex = "\"?(.+)\"?";
+        String regex = "(.+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(line);
         m.find();
@@ -34,7 +34,7 @@ public class SpanningUSA extends EdgeWeightedGraph {
     }
 
     public static Edge parseEdge(String line) {
-        String regex = "\"?(.+)\"?--\"?(.+)\"?\\[(.+)\\]";
+        String regex = "(.+)--(.+)\\[(.+)\\]";
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(line);
         m.find();
